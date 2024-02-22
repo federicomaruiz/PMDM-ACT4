@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "192207368935",
+    "firebase_url": "https://pmdmu5-default-rtdb.europe-west1.firebasedatabase.app",
+    "project_id": "pmdmu5",
+    "storage_bucket": "pmdmu5.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:192207368935:android:6c39030ed0a79e068fe842",
+        "android_client_info": {
+          "package_name": "com.utad.pmdmu5"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "192207368935-32v8u1euls1tq433kibao8b80iq60tmu.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.utad.pmdmu5",
+            "certificate_hash": "6fe83c4a834b21676025ba5ceb0206a8ef7d70bb"
+          }
+        },
+        {
+          "client_id": "192207368935-7j1pth8146lsrq460oa3rafin5j38mra.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBfCnpWwIEC1Ifr96-byfZEB1t7doe9Ks8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "192207368935-7j1pth8146lsrq460oa3rafin5j38mra.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

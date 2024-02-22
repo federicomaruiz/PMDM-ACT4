@@ -1,0 +1,8 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- Base application theme. -->
+    <style name="Base.Theme.PMDMU5" parent="Theme.Material3.DayNight.NoActionBar">
+        <item name="android:windowBackground">@color/background_app</item>
+    </style>
+
+    <style name="Theme.PMDMU5" parent="Base.Theme.PMDMU5" />
+</resources>
