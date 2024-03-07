@@ -10,10 +10,9 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
-import com.utad.pmdmu5.data.db.firebase.model.User
+import com.utad.pmdmu5.data.db.paperdb.UserRepository
 import com.utad.pmdmu5.databinding.FragmentLoginBinding
 import com.utad.pmdmu5.ui.home.HomeActivity
-import io.paperdb.Paper
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
@@ -22,6 +21,8 @@ class LoginFragment : Fragment() {
     private lateinit var _binding: FragmentLoginBinding
     private val binding: FragmentLoginBinding get() = _binding
     private val viewModel: LoginViewModel by viewModels()
+    private val userRepository = UserRepository()
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -41,13 +42,9 @@ class LoginFragment : Fragment() {
 
     private fun checkUser() {
         lifecycleScope.launch(Dispatchers.IO) {
-            val keyList: List<String> = Paper.book("users").allKeys
-            keyList.forEach { key ->
-                val user: User? = Paper.book("users").read(key)
-                if (user != null && user.isLoggedIn) {
-                    goHome()
-                    return@forEach // Salimos del bucle si encontramos un usuario logeado
-                }
+            val isLoggedIn = userRepository.checkUser()
+            if (isLoggedIn) {
+                goHome()
             }
         }
     }

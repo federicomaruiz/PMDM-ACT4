@@ -22,12 +22,15 @@ class HomeActivity : AppCompatActivity() {
         binding.rvGames.layoutManager =
             LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
         binding.rvGames.adapter = adapter
-        oberseveViewModelResponse()
-        viewModel.getAllGames()
+        observeViewModelResponse()
+        val storeId = 1
+        viewModel.getAllGames(storeId)
+
+
 
     }
 
-    private fun oberseveViewModelResponse() {
+    private fun observeViewModelResponse() {
         viewModel.gamesResponse.observe(this) { uiState ->
             if (uiState != null) {
                 adapter.submitList(uiState.response)

@@ -7,7 +7,7 @@ import androidx.lifecycle.viewModelScope
 import com.utad.pmdmu5.data.db.firebase.AuthManager
 import com.utad.pmdmu5.data.db.firebase.AuthRes
 import com.utad.pmdmu5.data.db.firebase.model.User
-import io.paperdb.Paper
+import com.utad.pmdmu5.data.db.paperdb.UserRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
@@ -22,12 +22,14 @@ class CreateViewModel : ViewModel() {
     private var _createResponse: MutableLiveData<CreateUIState> = MutableLiveData(CreateUIState())
     val createResponse: LiveData<CreateUIState> get() = _createResponse
     val authManager: AuthManager = AuthManager()
+    val userRepository: UserRepository = UserRepository()
 
     // Creo el usuario para verificar si esta logeado en Paper db
     private fun createUserLoggedPaperDb(email: String, user: User) {
         viewModelScope.launch(Dispatchers.IO) {
-            Paper.book("users").write(email, user)
-        }
+            val userFormat = user.toString()
+            userRepository.saveUser(email,user)
+            }
     }
 
     suspend fun doLoginFireBase(email: String, password: String) {

@@ -21,13 +21,14 @@ class HomeViewModel : ViewModel() {
     private var _gamesResponse: MutableLiveData<HomeUIState> = MutableLiveData(HomeUIState())
     val gamesResponse: LiveData<HomeUIState> get() = _gamesResponse
 
-    fun getAllGames() {
+    fun getAllGames(storeId: Int) {
+
         _gamesResponse.postValue(
             HomeUIState(isLoading = true)
         )
         viewModelScope.launch(Dispatchers.IO) {
             delay(2000)
-            val response = GamesApi.service.baseCall()
+            val response = GamesApi.service.baseCall(storeId)
             if (response.isSuccessful) {
                 _gamesResponse.postValue(
                     HomeUIState(isLoading = false, response = response.body())

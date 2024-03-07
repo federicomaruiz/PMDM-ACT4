@@ -6,8 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.utad.pmdmu5.data.db.firebase.AuthManager
 import com.utad.pmdmu5.data.db.firebase.AuthRes
-import com.utad.pmdmu5.data.db.firebase.model.User
-import io.paperdb.Paper
+import com.utad.pmdmu5.data.db.paperdb.UserRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
@@ -21,6 +20,7 @@ class LoginViewModel : ViewModel() {
     private var _loginResponse: MutableLiveData<LoginUIState> = MutableLiveData(LoginUIState())
     val loginResponse: LiveData<LoginUIState> get() = _loginResponse
     val authManager: AuthManager = AuthManager()
+    val userRepository: UserRepository = UserRepository()
 
 
     fun doLoginFire(email: String, password: String) {
@@ -39,19 +39,15 @@ class LoginViewModel : ViewModel() {
         }
     }
 
-    fun doLogin(email: String, password: String) {
-        // Obtener el usuario de la base de datos con el email proporcionado
-        val user = Paper.book("users").read<User>(email)
-        // Verificar si el usuario existe y si la contraseña coincide
+    private fun doLogin(email: String, password: String) {
+        val user = userRepository.getUserByEmail(email)
         val isLoginSuccessful = user != null && user.passwd == password
         if (isLoginSuccessful) {
-            // Actualizar el estado de isLoggedIn en el objeto User
             user!!.isLoggedIn = true
-            // Eliminar el usuario existente (si existe) con el correo electrónico actual
-            Paper.book("users").delete(email)
-            // Guardar el nuevo usuario con el correo electrónico actualizado
-            Paper.book("users").write(email, user)
+            userRepository.deleteUserByEmail(email)
+            viewModelScope.launch(Dispatchers.IO) {
+                userRepository.saveUser(email,user)
+            }
         }
-
     }
 }
